@@ -9,7 +9,7 @@ import News from './pages/News';
 
 function App() {
   return (
-      <div className="App">
+      <div className="App" style={{margin: "0 auto", maxWidth: "1000px"}}>
         <NavBar />
         <Routes>
           <Route path="/">

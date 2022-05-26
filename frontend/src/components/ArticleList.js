@@ -6,6 +6,9 @@ const StyledLink = styled(Link)`
   text-decoration: none;
   color:#ff00aa;
   border-bottom: 1px solid black;
+  & p {
+    color:black;
+  }
 `
 
 
