@@ -1,12 +1,13 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import { MongoClient } from 'mongodb';
-
+import path from 'path';
 const app = express();
 const port = 8000;
 
-app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, '/build')));
 
+app.use(bodyParser.json());
 
 const withDB = async (operations, res) => {
   try {
@@ -20,12 +21,6 @@ const withDB = async (operations, res) => {
     res.status(500).json({ message: 'Error connecting to db', error })
   }
 }
-
-
-app.get('/', async (req, res) => {
-  res.send('Hello World!');
-});
-
 
 app.get('/api/articles/:name', async (req, res) => {
   withDB(async (db) => {
@@ -57,6 +52,10 @@ app.post('/api/articles/:name/add-comment', (req, res) => {
     res.status(200).json(updatedArticleInfo);
   }, res)
 });
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + '/build/index.html'));
+})
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`)
